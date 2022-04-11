@@ -1,8 +1,8 @@
 import json
-from typing import Type, Any
+from typing import Type, Any, Generator
 
 from jsonizer.builder import Builder
-from jsonizer.exceptions import AmbiguityParamsException, UnparsedJsonException
+from jsonizer.exceptions import AmbiguityParamsException, UnparsedJsonException, FullyUnparsedException
 from jsonizer.hashes import hash_names
 
 
@@ -76,7 +76,10 @@ class Parser:
         if isinstance(data, list):
             return self._parse_list(data)
         else:
-            return self._parse_dict(data)
+            instance = self._parse_dict(data)
+            if isinstance(instance, dict):
+                raise FullyUnparsedException(data)
+            return instance
 
     def _parse_list(self, data: list[dict]) -> list[Any]:
         return [
@@ -85,7 +88,8 @@ class Parser:
         ]
 
     def _parse_dict(self, data: dict) -> Any:
-        hash_ = hash_names(data.keys())
+        keys = self._extract_keys(data)
+        hash_ = hash_names(keys)
         type_class = self._hashes.get(hash_)
         if type_class is None:
             if self._disallow_dicts:
@@ -96,6 +100,12 @@ class Parser:
             key = self._format_key(key)
             init_params[key] = self._parse_value(value)
         return type_class(**init_params)
+
+    def _extract_keys(self, data: dict) -> Generator[str, Any, None]:
+        return (
+            self._format_key(key)
+            for key in data.keys()
+        )
 
     def _format_key(self, key: str) -> str:
         if self._lowercase_keys:

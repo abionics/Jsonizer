@@ -19,3 +19,9 @@ class UnparsedJsonException(JsonizerException):
             f'Cannot recognize class for JSON data "{data}"\n'
             'Hint: try to pass `disallow_dicts=False` to parser'
         )
+
+
+class FullyUnparsedException(JsonizerException):
+    def __init__(self, data: dict):
+        keys = list(data.keys())  # list instead of tuple for beauty logs ^^
+        super().__init__(f'Cannot parse main (root) dict, keys: {keys}')

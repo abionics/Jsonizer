@@ -86,7 +86,7 @@ they can be in any order
 
 ## Exceptions
 
-There are three kind of exceptions:
+There are 3+1 kind of exceptions:
 
 <details>
 <summary>1. AmbiguityParamsException</summary>
@@ -137,7 +137,15 @@ person = parser.parse(person_data)
 </details>
 
 <details>
-<summary>3. JSONDecodeError</summary>
+<summary>3. FullyUnparsedException</summary>
+
+Cannot parse main dict (root/first elements) into one of passed classes.
+Check keys of JSON data, is they really matched to any class
+
+</details>
+
+<details>
+<summary>4. JSONDecodeError (standard Python exception)</summary>
 
 Default Python exception in case of invalid JSON file or string.
 Check your JSON, 99.69% that it is invalid. You can check it [here](https://jsonformatter.curiousconcept.com).
