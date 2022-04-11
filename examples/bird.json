@@ -1,0 +1,12 @@
+{
+    "name": "Duck",
+    "eggs": [
+        {
+            "size": 12
+        },
+        {
+            "size": 69,
+            "color": "purple"
+        }
+    ]
+}
