@@ -4,6 +4,6 @@ Email: abionics.dev@gmail.com
 License: MIT
 """
 
-from jsonizer.parser import Parser as Jsonizer
+from jsonizer.parser import Jsonizer
 
-__version__ = '1.1.0'
+__version__ = '1.2.0'

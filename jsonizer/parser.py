@@ -6,7 +6,7 @@ from jsonizer.exceptions import AmbiguityParamsException, UnparsedJsonException,
 from jsonizer.hashes import hash_names
 
 
-class Parser:
+class Jsonizer:
 
     def __init__(
             self,
